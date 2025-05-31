@@ -8,6 +8,17 @@ Window {
     visible: true
     title: qsTr("Guitar Pedal")
 
+    FontLoader{
+        id:russoFontLoader
+        source:"fonts/RussoOne-Regular.ttf"
+    }
+
+
+    FontLoader{
+        id:prismaFontLoader
+        source:"fonts/Prisma.ttf"
+    }
+
     Image {
         id: pedelBackground
         source: "assets/Guitar-Pedal-Background.png"
@@ -47,29 +58,69 @@ Window {
             anchors.right: parent.right
         }
     }
-    Column{
+
+    component DeviceText: Text {
+        color: "#191919"
+        font.family: russoFontLoader.font.family
+        font.weight: russoFontLoader.font.weight
+        font.pixelSize: 9
+    }
+
+    component InfoText: Column{
+        id: infoLabel
         spacing: 5
-        anchors.top: parent.verticalCenter
-        anchors.topMargin: 16
-        anchors.horizontalCenter: parent.horizontalCenter
+
+        property alias text:label.text
+        property alias font: label.font
+        property int lineWidth:200
+        property int lineHeight:2
+        property color linecolor:"#191919"
+
 
         Rectangle{
-            width: 200
-            height: 2
-            color: "#191919"
+            width: infoLabel.lineWidth
+            height: infoLabel.lineHeight
+            color: infoLabel.linecolor
         }
 
-        Text{
-            text: qsTr("TIME BLENDER")
-            font.pixelSize: 18
+        DeviceText{
+            id: label
             anchors.horizontalCenter: parent.horizontalCenter
 
         }
         Rectangle{
-            width: 200
-            height: 2
-            color: "#191919"
+            width: infoLabel.lineWidth
+            height: infoLabel.lineHeight
+            color: infoLabel.linecolor
         }
+    }
+
+    InfoText {
+        text: qsTr("TIME BLENDER")
+        anchors.top: parent.verticalCenter
+        anchors.topMargin: 16
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 10
+        font.family: prismaFontLoader.font.family
+        font.pixelSize: 18
+    }
+
+    InfoText {
+        text: qsTr("IN")
+        anchors.top: parent.top
+        anchors.topMargin: 60
+        anchors.right: parent.right
+        lineWidth: 30
+        lineHeight: 2
+    }
+
+    InfoText {
+        anchors.top: parent.top
+        anchors.topMargin: 60
+        anchors.left: parent.left
+        text: qsTr("OUT")
+        lineWidth: 30
+        lineHeight: 2
     }
 
 
